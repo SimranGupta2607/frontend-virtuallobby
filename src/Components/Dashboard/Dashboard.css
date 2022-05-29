@@ -1,0 +1,49 @@
+.dashboard-parent{
+    width: 100%;
+    background-color:#fff;
+    color: #0E1F30;
+}
+nav{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:1rem 3rem;
+    background-color: #0E1F30;
+    color : #fff;
+    box-shadow: 0px 2px 30px #0e1f3072;
+}
+.nav-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color : #fff;
+}
+.dashboard-parent .lower-landing .shop-cards{
+    width: 100%;
+    margin-top: 4rem;
+    /* padding-top: 3rem; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.card-img-top{
+    width: 100%!important;
+    height: 200px!important;
+    object-fit: cover;
+ }
+ .card{
+     margin-bottom: 2rem;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor:pointer;
+ }
+ .card:hover{
+    box-shadow: 0px 2px 10px #0e1f3035;
+ }

@@ -1,0 +1,62 @@
+.register-parent{
+    width: 100%;
+    height: 100%;
+}
+.register-parent #image-section{
+    position: relative;
+    width: 40%;
+    height: 100%;
+}
+.register-parent #image-section img{
+    width: 100%;
+    height: 100%;
+}
+.register-parent #image-section #overlay{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80.5%;
+    padding: 2rem;
+    color: #fff;
+}
+.register-parent #image-section #overlay h1{
+    font-size: 3.2rem;
+    font-weight : 600;
+    line-height: 4rem;
+}
+.register-parent #image-section #overlay a{
+    text-decoration: none;
+    color : #fff;
+}
+.register-parent #form-section{
+    position : relative;
+    width: 60%;
+    padding: 4rem;
+    overflow-y: scroll;
+}
+.register-parent #form-section #form-body{
+    width: 100%;
+    height: 100%;
+    padding:4rem;
+    background-color: #fff;
+}
+.register-parent #form-section #form-body h2{
+    color:#0E1F30;
+}
+.register-parent #form-section #form-body form{
+    width: 100%;
+    height: 100%;
+}
+.register-parent #form-section #form-body form button{
+    padding : 0.2rem 5rem;
+    background-color : #73A9DF;
+    border:none;
+    color:white;
+    box-shadow: 0px 15px 40px #73a9df93;
+    margin-left:1rem;
+}
+.utility{
+    cursor :pointer;
+}
