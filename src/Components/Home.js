@@ -21,6 +21,15 @@ function Home() {
           <a href="#reviews">Reviews</a>
           <button id='nav-btn' onClick={() => navigate("/register")}>Register</button>
         </div>
+        <div className="nav-menu-icon">
+        <i className="ri-menu-3-line"></i>
+        <div className="menu-links">
+        <a href="#home">Home</a>
+          <a href="#services">Our Services</a>
+          <a href="#reviews">Reviews</a>
+          <button id='nav-btn' onClick={() => navigate("/register")}>Register</button>
+        </div>
+        </div>
       </nav>
       <div className="lower-landing">
       <a href='/' name='home' style={{textDecoration:'none',color:'white'}}>
