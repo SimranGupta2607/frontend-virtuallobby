@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import img from "../assets/images/Group 52.png";
-import reviewcard from "../assets/images/Group 57.png"
-import Footer from './Footer/Footer.js'
+import reviewcard from "../assets/images/Group 57.png";
+import Footer from "./Footer/Footer.js";
 
 function Home() {
+  const [display, setdisplay] = useState("none");
   const navigate = useNavigate();
 
   return (
@@ -19,25 +20,34 @@ function Home() {
           <a href="#home">Home</a>
           <a href="#services">Our Services</a>
           <a href="#reviews">Reviews</a>
-          <button id='nav-btn' onClick={() => navigate("/register")}>Register</button>
+          <button id="nav-btn" onClick={() => navigate("/register")}>
+            Register
+          </button>
         </div>
         <div className="nav-menu-icon">
-        <i className="ri-menu-3-line"></i>
-        <div className="menu-links">
-        <a href="#home">Home</a>
-          <a href="#services">Our Services</a>
-          <a href="#reviews">Reviews</a>
-          <button id='nav-btn' onClick={() => navigate("/register")}>Register</button>
-        </div>
+          <i style={{cursor:'pointer'}} onClick={() => setdisplay("flex")} className="ri-menu-3-line"></i>
+          <div style={{ display: display }} className="menu-links">
+            <i style={{cursor:'pointer'}} onClick={() => setdisplay("none")} className="ri-close-line"></i>
+            <a href="#home">Home</a>
+            <a href="#services">Our Services</a>
+            <a href="#reviews">Reviews</a>
+            <button id="nav-btn" onClick={() => navigate("/register")}>
+              Register
+            </button>
+          </div>
         </div>
       </nav>
       <div className="lower-landing">
-      <a href='/' name='home' style={{textDecoration:'none',color:'white'}}>
-      <h1>
-          A platform for <br />
-          <span className="diff-font">hassle free</span> Appointments
-        </h1>
-      </a>
+        <a
+          href="/"
+          name="home"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          <h1>
+            A platform for <br />
+            <span className="diff-font">hassle free</span> Appointments
+          </h1>
+        </a>
         <p>
           Schedule your appointments at home
           <br />
@@ -45,11 +55,19 @@ function Home() {
           <br />
           salons and clinics in this pandemic times.
         </p>
-        <button className='custom-btn' onClick={() => navigate("/register")}>Get Started</button>
+        <button className="custom-btn" onClick={() => navigate("/register")}>
+          Get Started
+        </button>
         <img src={img} alt="" />
       </div>
       <div className="our-services">
-        <a href='/' name='services' style={{textDecoration:'none',color:'white'}}><h2>Our Services</h2></a>
+        <a
+          href="/"
+          name="services"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          <h2>Our Services</h2>
+        </a>
         <div id="service-cards">
           <div className="service-card">
             <h4>Booking Hassle Free</h4>
@@ -75,41 +93,53 @@ function Home() {
         </div>
       </div>
       <div className="our-services">
-      <a href='/' name='reviews' style={{textDecoration:'none',color:'white'}}><h2>What Our Customers Say</h2></a>
-      <div id="review-cards">
-        <div className="review-card">
-          <img src={reviewcard} alt="" />
-          <div className="overlay-reviewcard">
-            <div className="profile"></div>
-            <h6>Love Quinn</h6>
-            <div className="testimonial">
-              I really liked the service of this app. Especially in this pandemic, it is quite something of a great use. Thanks Virtual Lobby for the service.
+        <a
+          href="/"
+          name="reviews"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          <h2>What Our Customers Say</h2>
+        </a>
+        <div id="review-cards">
+          <div className="review-card">
+            <img src={reviewcard} alt="" />
+            <div className="overlay-reviewcard">
+              <div className="profile"></div>
+              <h6>Love Quinn</h6>
+              <div className="testimonial">
+                I really liked the service of this app. Especially in this
+                pandemic, it is quite something of a great use. Thanks Virtual
+                Lobby for the service.
+              </div>
+            </div>
+          </div>
+          <div className="review-card">
+            <img src={reviewcard} alt="" />
+            <div className="overlay-reviewcard">
+              <div className="profile"></div>
+              <h6>Joe Goldberg</h6>
+              <div className="testimonial">
+                I really liked the service of this app. Especially in this
+                pandemic, it is quite something of a great use. Thanks Virtual
+                Lobby for the service.
+              </div>
+            </div>
+          </div>
+          <div className="review-card">
+            <img src={reviewcard} alt="" />
+            <div className="overlay-reviewcard">
+              <div className="profile"></div>
+              <h6>Natalie Thomson</h6>
+              <div className="testimonial">
+                I really liked the service of this app. Especially in this
+                pandemic, it is quite something of a great use. Thanks Virtual
+                Lobby for the service.
+              </div>
             </div>
           </div>
         </div>
-        <div className="review-card">
-          <img src={reviewcard} alt="" />
-          <div className="overlay-reviewcard">
-          <div className="profile"></div>
-          <h6>Joe Goldberg</h6>
-          <div className="testimonial">
-            I really liked the service of this app. Especially in this pandemic, it is quite something of a great use. Thanks Virtual Lobby for the service.
-          </div>
-          </div>
-        </div>
-        <div className="review-card">
-          <img src={reviewcard} alt="" />
-          <div className="overlay-reviewcard">
-          <div className="profile"></div>
-          <h6>Natalie Thomson</h6>
-          <div className="testimonial">
-            I really liked the service of this app. Especially in this pandemic, it is quite something of a great use. Thanks Virtual Lobby for the service.
-          </div>
-          </div>
-        </div>
       </div>
-      </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

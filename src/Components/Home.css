@@ -22,6 +22,9 @@
     .home-parent nav .nav-menu-icon{
         display: none;
     }
+    .home-parent nav .menu-links{
+        display: none;
+    }
     .home-parent nav .nav-links a,#nav-btn{
         margin-left:5rem;
         font-size: 12px;
@@ -180,7 +183,31 @@
     .home-parent nav .nav-links{
         display: none;
     }
-    
+    .home-parent nav .menu-links{
+        position: absolute;
+        top:0;
+        right:0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 500px;
+        height: 300px;
+        background-color: #fff;
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    #nav-btn{
+        color:white;
+        margin: 1rem;
+    }
+    .home-parent nav .menu-links a{
+        text-decoration: none;
+        color: #0E1F30;
+        margin:1rem
+    }
+    .home-parent nav .menu-links i{
+        color : #0E1F30
+    }
     button{
         padding : .5rem 1.5rem;
         background-color: #73A9DF;
@@ -333,6 +360,31 @@
     }
     .home-parent nav .nav-links{
         display: none;
+    }
+    .home-parent nav .menu-links{
+        position: absolute;
+        top:0;
+        right:0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 14rem;
+        height: 18rem;
+        background-color: #fff;
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    #nav-btn{
+        color:white;
+        margin: 1rem;
+    }
+    .home-parent nav .menu-links a{
+        text-decoration: none;
+        color: #0E1F30;
+        margin:1rem
+    }
+    .home-parent nav .menu-links i{
+        color : #0E1F30
     }
     button{
         padding : .5rem 1.5rem;
