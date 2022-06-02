@@ -13,11 +13,6 @@ nav{
     color : #fff;
     box-shadow: 0px 2px 30px #0e1f3072;
 }
-.nav-buttons{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .dashboard-btn{
     display: flex;
     flex-direction: column;

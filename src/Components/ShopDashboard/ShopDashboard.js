@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Link } from "react-router-dom";
 
 function ShopDashboard() {
   const [shopid, setShopid] = useState(null);
@@ -23,7 +22,6 @@ function ShopDashboard() {
     let customer = "";
     if(state){
         customer = state.map(f=>{
-            console.log(f)
             return(
                 <div key={f.bookingid} className="single-card">
           <div className="heading">

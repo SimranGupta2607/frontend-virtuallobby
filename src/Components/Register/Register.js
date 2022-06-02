@@ -106,7 +106,6 @@ function Register() {
               }
             )
               .then(async (response) => {
-                console.log("in login",response)
                 if(response.data.status === true){
                   localStorage.setItem("userInfo",JSON.stringify(response.data.data))
                   setloading(false)
@@ -221,7 +220,6 @@ function Register() {
             }
           )
             .then(async (response) => {
-              console.log("in login",response)
               if(response.data.status === true){
                 localStorage.setItem("userInfo",JSON.stringify(response.data.data))
                 setloading(false)
@@ -548,6 +546,18 @@ function Register() {
                 "Register"
               )}
             </button>
+            <div className="bottom-links">
+            <Link to="/login">
+            Already have an account?{" "}<br/>
+            <span style={{ color: "#73A9DF" }}> Login </span>{" "}
+          </Link>
+          <Link
+            style={{ marginTop: '2rem',display: "inline-block", textDecoration: "none" }}
+            to="/"
+          >
+            Back to home
+          </Link>
+            </div>
           </form>
         </div>
       </div>

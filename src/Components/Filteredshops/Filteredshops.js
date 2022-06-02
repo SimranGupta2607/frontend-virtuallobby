@@ -57,7 +57,7 @@ function Filteredshops() {
         <div key={f.shopid} className="single-card">
           <div className="heading">
             <span style={{ textTransform: "Capitalize" }}>{f.shopname}</span>
-            <span>Slots Available</span>
+            <span>Slots Available : pincodee</span>
           </div>
           <div className="line"></div>
           <div className="heading">

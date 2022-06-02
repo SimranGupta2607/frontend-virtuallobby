@@ -61,6 +61,9 @@
     .utility{
         cursor :pointer;
     }
+    .bottom-links{
+        display: none;
+    }
 }
 
 @media only screen and (min-width : 768px) and (max-width : 1024px){
@@ -119,6 +122,9 @@
     .utility{
         cursor :pointer;
     }
+    .bottom-links{
+        display: none;
+    }
 }
 @media only screen and (max-width:768px){
     .register-parent{
@@ -151,5 +157,13 @@
     }
     .utility{
         cursor :pointer;
+    }
+    .bottom-links{
+        display: flex;
+        flex-direction: column;
+    }
+    .bottom-links a{
+        color : #0E1F30;
+        text-decoration: none;
     }
 }

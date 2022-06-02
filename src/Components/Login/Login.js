@@ -30,7 +30,6 @@ function Login() {
       }
     )
     .then(async (response) => {
-      console.log(response)
       if(response.data.status === true){
         await swal("Logged in successfully","","success")
         localStorage.setItem("userInfo",JSON.stringify(response.data.data))
@@ -181,6 +180,7 @@ function Login() {
                 "Log In"
               )}
             </button>
+            <div className="login-bottom">
             <Link to="/register">
               Don't have an account?{" "}
               <span style={{ color: "#73A9DF" }}> Signup </span>{" "}
@@ -191,6 +191,7 @@ function Login() {
             >
               Back to home
             </Link>
+            </div>
           </form>
         </div>
       </div>
