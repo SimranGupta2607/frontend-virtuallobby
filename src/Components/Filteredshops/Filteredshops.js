@@ -8,29 +8,62 @@ import swal from "sweetalert";
 
 function Filteredshops() {
   const [shoplist, setshoplist] = useState(null);
-  const [display, setDisplay] = useState('none');
+  const [display, setDisplay] = useState("none");
+  const [timeslot, setTimeslot] = useState(null);
+  const [sid, setSid] = useState(null);
+  const [uid, setUid] = useState(null);
   let { shoptype } = useParams();
 
-  const book = ()=>{
-    swal("Are you sure to book this slot?",{
-      buttons : {
-        cancel : "Let me back",
+  const bringSlots = (shopid) => {
+    setDisplay("flex");
+    setSid(shopid);
+    axios
+      .get("http://localhost:8087/getTimeSlot")
+      .then((res) => {
+        setTimeslot(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const book = (time, index) => {
+    console.log(time, index);
+    swal("Are you sure to book this slot?", {
+      buttons: {
+        cancel: "Let me back",
         sure: {
-          text : "I'm sure",
-          value : "sure"
+          text: "I'm sure",
+          value: "sure",
         },
       },
-    }).then((value)=>{
-      switch(value){
-        case "sure" : 
-        swal("Booked slot Successfully!","","success").then((val)=>{
-        });
-        return setDisplay('none')
+    }).then((value) => {
+      switch (value) {
+        case "sure":
+          axios
+            .post("http://localhost:8085/bookingDetails", {
+              userid: uid,
+              shopid: sid,
+              timeslot: time,
+            })
+            .then((res) => {
+              if (res.status === true) {
+                swal("Booked slot Successfully!", "", "success").then(
+                  (val) => {}
+                );
+                return setDisplay("none");
+              }
+            })
+            .catch(err=>{
+              swal("Something went wrong","","info")
+              return setDisplay("none");  //these two lines are new
+            })
+        // swal("Booked slot Successfully!", "", "success").then((val) => {});
+        // return setDisplay("none");
+        break;
         default:
-          swal("Got away safely!","","success")
+          swal("Got away safely!", "", "success");
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     axios
@@ -38,21 +71,39 @@ function Filteredshops() {
         `http://localhost:8084/getShopDetailsByServiceType?serviceType=${shoptype}`
       )
       .then((res) => {
+        let v = JSON.parse(localStorage.getItem("userInfo"));
+        let u = v.userid;
+        setUid(u);
         setshoplist(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-
     return () => {};
   }, [shoptype]);
 
   //dashboard me jo state bna h waisa hi rendering of shops yaha hoga
 
+  let slots = "";
+  if (timeslot) {
+    slots = timeslot.map((f, i) => {
+      return (
+        <ul key={i} className="list-group list-group-flush">
+          <button
+            style={{ boxShadow: "none" }}
+            onClick={() => book(f, i)}
+            className="list-group-item"
+          >
+            {f}
+          </button>
+        </ul>
+      );
+    });
+  }
+
   let shop = "";
   if (shoplist) {
     shop = shoplist.map((f) => {
-
       return (
         <div key={f.shopid} className="single-card">
           <div className="heading">
@@ -76,7 +127,7 @@ function Filteredshops() {
                 borderRadius: ".5rem",
                 transition: "all 0.5s cubic-bezier(0.19, 1, 0.22, 1)",
               }}
-              onClick={() => setDisplay('flex')}
+              onClick={() => bringSlots(f.shopid)}
             >
               Book Slot
             </button>
@@ -89,18 +140,20 @@ function Filteredshops() {
   return (
     <div className="filteredshops">
       <Nav />
-      <div style={{display:display}} className="pop-up">
+      <div style={{ display: display }} className="pop-up">
         <div className="pop-up-menu">
-          <i onClick={()=>setDisplay('none')} style={{cursor:'pointer'}} className="ri-close-line"></i>
-            <ul className="list-group list-group-flush">
-              <button style={{boxShadow: "none"}} onClick={book} className="list-group-item">10:00 - 10:30</button>
-              <button style={{boxShadow: "none"}} onClick={book} className="list-group-item">11:00 - 11:30</button>
-              <button style={{boxShadow: "none"}} onClick={book} className="list-group-item">12:00 - 12:30</button>
-              <button style={{boxShadow: "none"}} onClick={book} className="list-group-item">13:00 - 13:30</button>
-              <button style={{boxShadow: "none"}} onClick={book} className="list-group-item">15:00 - 15:30</button>
-              <button style={{boxShadow: "none"}} onClick={book} className="list-group-item">16:00 - 16:30</button>
-              <button style={{boxShadow: "none"}} onClick={book} className="list-group-item">17:00 - 17:30</button>
-            </ul>
+          <i
+            onClick={() => setDisplay("none")}
+            style={{ cursor: "pointer" }}
+            className="ri-close-line"
+          ></i>
+          {slots === "" ? (
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            slots
+          )}
         </div>
       </div>
       <div className="filtered-shops-landing">

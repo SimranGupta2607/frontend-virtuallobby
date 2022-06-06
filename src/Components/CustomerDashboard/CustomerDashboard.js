@@ -46,7 +46,9 @@ function CustomerDashboard() {
       <div className="lower-landing">
         <h1 className="mt-5">Explore Shops Nearby</h1>
   
-        <div className="shop-cards">{shop}</div>
+        <div className="shop-cards">{shop===""?<div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>:shop}</div>
       </div>
     );
 }

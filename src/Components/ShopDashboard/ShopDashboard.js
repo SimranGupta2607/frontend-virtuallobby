@@ -9,7 +9,7 @@ function ShopDashboard() {
     let sid = v.shopid;
     setShopid(sid);
       Axios.get(
-        `http://localhost:8086/getbookingDetailsByShopId?shopId=14`
+        `http://localhost:8086/getbookingDetailsByShopId?shopId=${sid}`
       )
         .then((res) => {
           setstate(res.data.data);
@@ -25,15 +25,15 @@ function ShopDashboard() {
             return(
                 <div key={f.bookingid} className="single-card">
           <div className="heading">
-            <span style={{ textTransform: "Capitalize" }}>Aman Kumar</span>
-            <span style={{ textTransform: "Capitalize" }}>Time : 10:00 a.m - 10:30 a.m</span>
+            <span style={{ textTransform: "Capitalize" }}>{f.username}</span>
+            <span style={{ textTransform: "Capitalize" }}>Time : {f.timeslot} </span>
           </div>
           <div className="line"></div>
           <div className="heading">
             <span>
-              Address : house number - 8, IEL factory, Gumia , Pin : 829112
+              Address : {f.address} , Pin : {f.pincode}
             </span>
-            <span>Contact : 6206098865</span>
+            <span>Contact : {f.contact} </span>
           </div>
         </div>
             )
@@ -43,7 +43,9 @@ function ShopDashboard() {
     <div className="lower-landing">
       <h1 className="mt-5">New Appointments for today!</h1>
 
-      <div className="shop-cards">{customer}</div>
+      <div className="shop-cards">{customer===""?<div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>:customer}</div>
     </div>
   );
 }
