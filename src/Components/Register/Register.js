@@ -191,7 +191,7 @@ function Register() {
         shopname: shopname,
         password: password,
         email: email,
-        shopaddress: shopaddress,
+        address: shopaddress,
         pincode: pincode,
         contact: contact,
         utype: tripType,

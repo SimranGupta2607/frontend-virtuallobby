@@ -5,6 +5,8 @@ import Nav from "../Nav/Nav.js";
 import Footer from "../Footer/Footer.js";
 import axios from "axios";
 import swal from "sweetalert";
+import { useNavigate } from 'react-router-dom';
+
 
 function Filteredshops() {
   const [shoplist, setshoplist] = useState(null);
@@ -12,21 +14,21 @@ function Filteredshops() {
   const [timeslot, setTimeslot] = useState(null);
   const [sid, setSid] = useState(null);
   const [uid, setUid] = useState(null);
+  const navigate = useNavigate();
   let { shoptype } = useParams();
 
   const bringSlots = (shopid) => {
     setDisplay("flex");
     setSid(shopid);
     axios
-      .get("http://localhost:8087/getTimeSlot")
+      .get(`http://localhost:8087/getTimeSlot?shopId=${shopid}`)
       .then((res) => {
         setTimeslot(res.data.data);
       })
       .catch((err) => console.log(err));
   };
 
-  const book = (time, index) => {
-    console.log(time, index);
+  const book = (slotdetails, index) => {
     swal("Are you sure to book this slot?", {
       buttons: {
         cancel: "Let me back",
@@ -38,16 +40,22 @@ function Filteredshops() {
     }).then((value) => {
       switch (value) {
         case "sure":
-          axios
+          if(slotdetails.isTimeslotEnable === 'N'){
+             return swal("Slot not Available","Kindly choose another slot","info")
+          }
+          else{
+            axios
             .post("http://localhost:8085/bookingDetails", {
               userid: uid,
               shopid: sid,
-              timeslot: time,
+              timeslot: slotdetails.timeslot,
             })
             .then((res) => {
-              if (res.status === true) {
+              if (res.data.status === true) {
                 swal("Booked slot Successfully!", "", "success").then(
-                  (val) => {}
+                  (val) => {
+                    
+                  }
                 );
                 return setDisplay("none");
               }
@@ -56,6 +64,7 @@ function Filteredshops() {
               swal("Something went wrong","","info")
               return setDisplay("none");  //these two lines are new
             })
+          }
         // swal("Booked slot Successfully!", "", "success").then((val) => {});
         // return setDisplay("none");
         break;
@@ -73,8 +82,12 @@ function Filteredshops() {
       .then((res) => {
         let v = JSON.parse(localStorage.getItem("userInfo"));
         let u = v.userid;
+        let pin = v.pincode;
         setUid(u);
-        setshoplist(res.data.data);
+        let found = res.data.data.filter(obj=>{
+          return obj.pincode === pin
+        })
+        setshoplist(found);
       })
       .catch((err) => {
         console.log(err);
@@ -94,7 +107,7 @@ function Filteredshops() {
             onClick={() => book(f, i)}
             className="list-group-item"
           >
-            {f}
+            {f.timeslot}
           </button>
         </ul>
       );
@@ -108,7 +121,6 @@ function Filteredshops() {
         <div key={f.shopid} className="single-card">
           <div className="heading">
             <span style={{ textTransform: "Capitalize" }}>{f.shopname}</span>
-            <span>Slots Available : pincodee</span>
           </div>
           <div className="line"></div>
           <div className="heading">
@@ -167,7 +179,16 @@ function Filteredshops() {
             : "Tailors"}
         </h1>
 
-        <div className="single-shops">{shop}</div>
+        <div className="single-shops">{shop === "" ? (
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          ) : (
+            shop
+          )}</div>
+      </div>
+      <div className='back-btn'>
+      <span onClick={() => navigate(-1)}><i className="ri-arrow-left-fill"></i>Back</span>
       </div>
       <Footer />
     </div>

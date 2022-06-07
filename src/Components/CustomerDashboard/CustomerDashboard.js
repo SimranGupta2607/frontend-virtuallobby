@@ -2,7 +2,9 @@ import React,{useState,useEffect} from 'react'
 import Axios from "axios";
 import { Link } from "react-router-dom";
 
-function CustomerDashboard() {
+
+
+function CustomerDashboard(props) {
     const [state, setstate] = useState(null);
     useEffect(() => {
       Axios.get("http://localhost:8083/getServiceDetails")
@@ -44,11 +46,13 @@ function CustomerDashboard() {
     return (
   
       <div className="lower-landing">
+        <h4 className="mt-5">Hello {props.username}!</h4>
         <h1 className="mt-5">Explore Shops Nearby</h1>
   
         <div className="shop-cards">{shop===""?<div className="spinner-border text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div>:shop}</div>
+                
       </div>
     );
 }

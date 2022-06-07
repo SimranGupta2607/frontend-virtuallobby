@@ -7,7 +7,9 @@ function ShopDashboard() {
   useEffect(() => {
     let v = JSON.parse(localStorage.getItem("userInfo"));
     let sid = v.shopid;
+    let usertype = v.utype;
     setShopid(sid);
+    if(usertype === 'S'){
       Axios.get(
         `http://localhost:8086/getbookingDetailsByShopId?shopId=${sid}`
       )
@@ -17,6 +19,7 @@ function ShopDashboard() {
         .catch((err) => {
             console.log(err);
         });
+    }
         return () => {};
     }, []);
     let customer = "";
@@ -30,9 +33,6 @@ function ShopDashboard() {
           </div>
           <div className="line"></div>
           <div className="heading">
-            <span>
-              Address : {f.address} , Pin : {f.pincode}
-            </span>
             <span>Contact : {f.contact} </span>
           </div>
         </div>

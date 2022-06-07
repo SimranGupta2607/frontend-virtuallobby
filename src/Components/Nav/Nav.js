@@ -5,13 +5,18 @@ import swal from "sweetalert";
 function Nav() {
   const navigate = useNavigate();
   const [state, setstate] = useState("");
+  const [first, setfirst] = useState(null);
   const [display, setdisplay] = useState("none");
   useEffect(() => {
     let v = JSON.parse(localStorage.getItem("userInfo"));
     let utype = v.utype;
+    let i = v.userid;
     setstate(utype);
+    setfirst(i);
     return () => {};
   }, []);
+  
+
   const logout = () => {
     swal("Are you sure to LogOut?", {
       buttons: {
@@ -42,29 +47,14 @@ function Nav() {
           <span style={{ color: "#73A9DF", fontSize: "34px" }}>.</span>
         </h6>
         <div className="nav-buttons">
-          <div className="dropdown">
             <button
               className="dashboard-btn"
               type="button"
-              id="dropdownMenuButton1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+              onClick={logout}
             >
               <i className="ri-user-3-fill"></i>
-              Profile
+              Logout
             </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li>
-                <button
-                  onClick={logout}
-                  className="dropdown-item custom-drop-btn"
-                  href="/"
-                >
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
           {state === "U" ? (
             <div className="dropdown">
               <Link
@@ -76,7 +66,7 @@ function Nav() {
                   justifyContent: "center",
                   color: "white",
                 }}
-                to="/appointments/:id"
+                to={`/appointments/${first}`}
               >
                 <i className="ri-calendar-fill"></i>
                 Appointments
@@ -103,26 +93,10 @@ function Nav() {
                 style={{ color: "#0E1F30" }}
                 className="dashboard-btn"
                 type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                onClick={logout}
               >
-                Profile
+                Logout
               </button>
-              <ul
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton1"
-              >
-                <li>
-                  <button
-                    onClick={logout}
-                    className="dropdown-item custom-drop-btn"
-                    href="/"
-                  >
-                    Logout
-                  </button>
-                </li>
-              </ul>
             </div>
             {state === "U" ? (
               <div className="dropdown">
@@ -134,7 +108,7 @@ function Nav() {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  to="/appointments/:id"
+                  to={`/appointments/${first}`}
                 >
                   Appointments
                 </Link>
