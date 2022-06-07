@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import swal from "sweetalert";
 
-
 function Login() {
   const [loading, setloading] = useState(false);
   const [showPassword, setshowPassword] = useState(false);
@@ -21,7 +20,7 @@ function Login() {
       {
         username: email,
         password: password,
-        utype: tripType
+        utype: tripType,
       },
       {
         headers: {
@@ -29,51 +28,48 @@ function Login() {
         },
       }
     )
-    .then(async (response) => {
-      if(response.data.status === true){
-        await swal("Logged in successfully","","success")
-        localStorage.setItem("userInfo",JSON.stringify(response.data.data))
-        setloading(false)
-        navigate('/dashboard')
-      }
-      else{
-        setloading(false)
-        return swal("Incorrect username or password","","info")
-      }
-    })
-    .catch(async (err) => {
-      if (err.response) {
-      // client received an error response (5xx, 4xx)
-      setloading(false);
-      if (err.response.status >= 400 && err.response.status <= 499)
-        return swal(
-          "Uh-oh.",
-          "something was not right on your end, please try again",
-          "info"
-        );
-      else if (
-        err.response.status >= 500 &&
-        err.response.status <= 599
-      )
-        return swal(
-          "Uh-oh..Error 500",
-          "Something went wrong at our end. Sorry about that",
-          "info"
-        );
-    } else if (err.request) {
-      // client never received a response, or request never left
-      setloading(false);
-      return swal(
-        "Network error",
-        "The network connection is lost,please try after some time",
-        "info"
-      );
-    } else {
-      // anything else
-      console.log(err);
-      setloading(false);
-      return swal("something went wrong", "", "info");
-    }});
+      .then(async (response) => {
+        if (response.data.status === true) {
+          await swal("Logged in successfully", "", "success");
+          localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+          setloading(false);
+          navigate("/dashboard");
+        } else {
+          setloading(false);
+          return swal("Incorrect username or password", "", "info");
+        }
+      })
+      .catch(async (err) => {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          setloading(false);
+          if (err.response.status >= 400 && err.response.status <= 499)
+            return swal(
+              "Uh-oh.",
+              "something was not right on your end, please try again",
+              "info"
+            );
+          else if (err.response.status >= 500 && err.response.status <= 599)
+            return swal(
+              "Uh-oh..Error 500",
+              "Something went wrong at our end. Sorry about that",
+              "info"
+            );
+        } else if (err.request) {
+          // client never received a response, or request never left
+          setloading(false);
+          return swal(
+            "Network error",
+            "The network connection is lost,please try after some time",
+            "info"
+          );
+        } else {
+          // anything else
+          console.log(err);
+          setloading(false);
+          return swal("something went wrong", "", "info");
+        }
+      });
   };
   return (
     <div className="login-parent">
@@ -132,44 +128,44 @@ function Login() {
               />
             </div>
             <div className="form-check mb-5">
-            <div
-                    onClick={() => {
-                      setTripType("U");
-                    }}
-                    className="form-check form-check-inline"
-                  >
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="tripType"
-                      id="inlineRadio1"
-                      value={tripType}
-                      checked={tripType === "U"}
-                      readOnly
-                    />
-                    <label className="form-check-label" htmlFor="inlineRadio1">
-                      Customer
-                    </label>
-                  </div>
-                  <div
-                    onClick={() => {
-                      setTripType("S");
-                    }}
-                    className="form-check form-check-inline"
-                  >
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="tripType"
-                      id="inlineRadio2"
-                      value={tripType}
-                      checked={tripType === "S"}
-                      readOnly
-                    />
-                    <label className="form-check-label" htmlFor="inlineRadio2">
-                      Shop/Business Owner
-                    </label>
-                  </div>
+              <div
+                onClick={() => {
+                  setTripType("U");
+                }}
+                className="form-check form-check-inline"
+              >
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="tripType"
+                  id="inlineRadio1"
+                  value={tripType}
+                  checked={tripType === "U"}
+                  readOnly
+                />
+                <label className="form-check-label" htmlFor="inlineRadio1">
+                  Customer
+                </label>
+              </div>
+              <div
+                onClick={() => {
+                  setTripType("S");
+                }}
+                className="form-check form-check-inline"
+              >
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="tripType"
+                  id="inlineRadio2"
+                  value={tripType}
+                  checked={tripType === "S"}
+                  readOnly
+                />
+                <label className="form-check-label" htmlFor="inlineRadio2">
+                  Shop/Business Owner
+                </label>
+              </div>
             </div>
             <button type="submit" className="mb-5">
               {loading ? (
@@ -181,16 +177,16 @@ function Login() {
               )}
             </button>
             <div className="login-bottom">
-            <Link to="/register">
-              Don't have an account?{" "}
-              <span style={{ color: "#73A9DF" }}> Signup </span>{" "}
-            </Link>
-            <Link
-              style={{ display: "inline-block", textDecoration: "underline" }}
-              to="/"
-            >
-              Back to home
-            </Link>
+              <Link to="/register">
+                Don't have an account?{" "}
+                <span style={{ color: "#73A9DF" }}> Signup </span>{" "}
+              </Link>
+              <Link
+                style={{ display: "inline-block", textDecoration: "underline" }}
+                to="/"
+              >
+                Back to home
+              </Link>
             </div>
           </form>
         </div>

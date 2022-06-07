@@ -5,8 +5,7 @@ import Nav from "../Nav/Nav.js";
 import Footer from "../Footer/Footer.js";
 import axios from "axios";
 import swal from "sweetalert";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 function Filteredshops() {
   const [shoplist, setshoplist] = useState(null);
@@ -40,34 +39,35 @@ function Filteredshops() {
     }).then((value) => {
       switch (value) {
         case "sure":
-          if(slotdetails.isTimeslotEnable === 'N'){
-             return swal("Slot not Available","Kindly choose another slot","info")
-          }
-          else{
+          if (slotdetails.isTimeslotEnable === "N") {
+            return swal(
+              "Slot not Available",
+              "Kindly choose another slot",
+              "info"
+            );
+          } else {
             axios
-            .post("http://localhost:8085/bookingDetails", {
-              userid: uid,
-              shopid: sid,
-              timeslot: slotdetails.timeslot,
-            })
-            .then((res) => {
-              if (res.data.status === true) {
-                swal("Booked slot Successfully!", "", "success").then(
-                  (val) => {
-                    
-                  }
-                );
-                return setDisplay("none");
-              }
-            })
-            .catch(err=>{
-              swal("Something went wrong","","info")
-              return setDisplay("none");  //these two lines are new
-            })
+              .post("http://localhost:8085/bookingDetails", {
+                userid: uid,
+                shopid: sid,
+                timeslot: slotdetails.timeslot,
+              })
+              .then((res) => {
+                if (res.data.status === true) {
+                  swal("Booked slot Successfully!", "", "success").then(
+                    (val) => {}
+                  );
+                  return setDisplay("none");
+                }
+              })
+              .catch((err) => {
+                swal("Something went wrong", "", "info");
+                return setDisplay("none"); //these two lines are new
+              });
           }
-        // swal("Booked slot Successfully!", "", "success").then((val) => {});
-        // return setDisplay("none");
-        break;
+          // swal("Booked slot Successfully!", "", "success").then((val) => {});
+          // return setDisplay("none");
+          break;
         default:
           swal("Got away safely!", "", "success");
       }
@@ -84,9 +84,9 @@ function Filteredshops() {
         let u = v.userid;
         let pin = v.pincode;
         setUid(u);
-        let found = res.data.data.filter(obj=>{
-          return obj.pincode === pin
-        })
+        let found = res.data.data.filter((obj) => {
+          return obj.pincode === pin;
+        });
         setshoplist(found);
       })
       .catch((err) => {
@@ -97,7 +97,11 @@ function Filteredshops() {
 
   //dashboard me jo state bna h waisa hi rendering of shops yaha hoga
 
-  let slots = "";
+  let slots = (
+    <div className="spinner-border text-grey" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+  );
   if (timeslot) {
     slots = timeslot.map((f, i) => {
       return (
@@ -112,9 +116,15 @@ function Filteredshops() {
         </ul>
       );
     });
+  } else {
+    slots = "Nothing to Show";
   }
 
-  let shop = "";
+  let shop = (
+    <div className="spinner-border text-grey" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+  );
   if (shoplist) {
     shop = shoplist.map((f) => {
       return (
@@ -147,6 +157,8 @@ function Filteredshops() {
         </div>
       );
     });
+  } else {
+    shop = "Nothing to show";
   }
 
   return (
@@ -159,13 +171,7 @@ function Filteredshops() {
             style={{ cursor: "pointer" }}
             className="ri-close-line"
           ></i>
-          {slots === "" ? (
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          ) : (
-            slots
-          )}
+          {slots}
         </div>
       </div>
       <div className="filtered-shops-landing">
@@ -179,16 +185,12 @@ function Filteredshops() {
             : "Tailors"}
         </h1>
 
-        <div className="single-shops">{shop === "" ? (
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          ) : (
-            shop
-          )}</div>
+        <div className="single-shops">{shop}</div>
       </div>
-      <div className='back-btn'>
-      <span onClick={() => navigate(-1)}><i className="ri-arrow-left-fill"></i>Back</span>
+      <div className="back-btn">
+        <span onClick={() => navigate(-1)}>
+          <i className="ri-arrow-left-fill"></i>Back
+        </span>
       </div>
       <Footer />
     </div>

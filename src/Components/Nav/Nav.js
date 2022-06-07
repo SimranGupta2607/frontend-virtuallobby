@@ -15,7 +15,6 @@ function Nav() {
     setfirst(i);
     return () => {};
   }, []);
-  
 
   const logout = () => {
     swal("Are you sure to LogOut?", {
@@ -47,14 +46,10 @@ function Nav() {
           <span style={{ color: "#73A9DF", fontSize: "34px" }}>.</span>
         </h6>
         <div className="nav-buttons">
-            <button
-              className="dashboard-btn"
-              type="button"
-              onClick={logout}
-            >
-              <i className="ri-user-3-fill"></i>
-              Logout
-            </button>
+          <button className="dashboard-btn" type="button" onClick={logout}>
+            <i className="ri-user-3-fill"></i>
+            Logout
+          </button>
           {state === "U" ? (
             <div className="dropdown">
               <Link

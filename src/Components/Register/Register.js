@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Register.css";
 import img from "../../assets/images/Group 47.png";
 import { Link, useNavigate } from "react-router-dom";
-import  Axios  from "axios";
+import Axios from "axios";
 import swal from "sweetalert";
 
 function Register() {
@@ -32,22 +32,42 @@ function Register() {
     setloading(true);
 
     //check if the fields are empty depending upon the user type
-    if(tripType === "U"){
-      if(!(username && password && confirmPassword && email && pincode && contact) ){
-        setloading(false)
+    if (tripType === "U") {
+      if (
+        !(
+          username &&
+          password &&
+          confirmPassword &&
+          email &&
+          pincode &&
+          contact
+        )
+      ) {
+        setloading(false);
         return swal("All fields are mandatory");
       }
-    }
-    else{
-      if(!(username && password && confirmPassword && email && pincode && contact && shopname && shopaddress && dropValue) ){
-        setloading(false)
+    } else {
+      if (
+        !(
+          username &&
+          password &&
+          confirmPassword &&
+          email &&
+          pincode &&
+          contact &&
+          shopname &&
+          shopaddress &&
+          dropValue
+        )
+      ) {
+        setloading(false);
         return swal("All fields are mandatory");
       }
     }
 
-    if(password.length < 8){
-      setloading(false)
-      return swal("Passwords must be atleast 8 characters long")
+    if (password.length < 8) {
+      setloading(false);
+      return swal("Passwords must be atleast 8 characters long");
     }
 
     var pattern = new RegExp(
@@ -57,21 +77,19 @@ function Register() {
       setloading(false);
       return swal("Please enter a valid email address");
     }
-    if(contact.length !== 10){
-      setloading(false)
-      return swal("Please enter a valid 10 digits contact number")
+    if (contact.length !== 10) {
+      setloading(false);
+      return swal("Please enter a valid 10 digits contact number");
     }
-    if(pincode.length !== 6){
-      setloading(false)
-      return swal("Please enter a valid 5 digits pincode")
-    }
-
-    if(password !== confirmPassword)
-    {
-      setloading(false)
-      return swal("Passwords do not match")
+    if (pincode.length !== 6) {
+      setloading(false);
+      return swal("Please enter a valid 5 digits pincode");
     }
 
+    if (password !== confirmPassword) {
+      setloading(false);
+      return swal("Passwords do not match");
+    }
 
     if (tripType === "U") {
       const json = JSON.stringify({
@@ -88,16 +106,20 @@ function Register() {
           "Content-Type": "application/json",
         },
       })
-        .then(async(res) => {
-          if(res.data.status === true){
-            setloading(false)
-            await swal("Successfully registered!","Redirecting to your dashboard...","success")
+        .then(async (res) => {
+          if (res.data.status === true) {
+            setloading(false);
+            await swal(
+              "Successfully registered!",
+              "Redirecting to your dashboard...",
+              "success"
+            );
             Axios.post(
               "http://localhost:8080/login",
               {
                 username: email,
                 password: password,
-                utype: tripType
+                utype: tripType,
               },
               {
                 headers: {
@@ -106,48 +128,52 @@ function Register() {
               }
             )
               .then(async (response) => {
-                if(response.data.status === true){
-                  localStorage.setItem("userInfo",JSON.stringify(response.data.data))
-                  setloading(false)
-                  navigate('/dashboard')
-                }
-                else{
-                  setloading(false)
-                  return swal("Incorrect username or password","","info")
+                if (response.data.status === true) {
+                  localStorage.setItem(
+                    "userInfo",
+                    JSON.stringify(response.data.data)
+                  );
+                  setloading(false);
+                  navigate("/dashboard");
+                } else {
+                  setloading(false);
+                  return swal("Incorrect username or password", "", "info");
                 }
               })
-              .catch(async (err) => {if (err.response) {
-                // client received an error response (5xx, 4xx)
-                setloading(false);
-                if (err.response.status >= 400 && err.response.status <= 499)
+              .catch(async (err) => {
+                if (err.response) {
+                  // client received an error response (5xx, 4xx)
+                  setloading(false);
+                  if (err.response.status >= 400 && err.response.status <= 499)
+                    return swal(
+                      "Uh-oh.",
+                      "something was not right on your end, please try again",
+                      "info"
+                    );
+                  else if (
+                    err.response.status >= 500 &&
+                    err.response.status <= 599
+                  )
+                    return swal(
+                      "Uh-oh..Error 500",
+                      "Something went wrong at our end. Sorry about that",
+                      "info"
+                    );
+                } else if (err.request) {
+                  // client never received a response, or request never left
+                  setloading(false);
                   return swal(
-                    "Uh-oh.",
-                    "something was not right on your end, please try again",
+                    "Network error",
+                    "The network connection is lost,please try after some time",
                     "info"
                   );
-                else if (
-                  err.response.status >= 500 &&
-                  err.response.status <= 599
-                )
-                  return swal(
-                    "Uh-oh..Error 500",
-                    "Something went wrong at our end. Sorry about that",
-                    "info"
-                  );
-              } else if (err.request) {
-                // client never received a response, or request never left
-                setloading(false);
-                return swal(
-                  "Network error",
-                  "The network connection is lost,please try after some time",
-                  "info"
-                );
-              } else {
-                // anything else
-                console.log(err);
-                setloading(false);
-                return swal("something went wrong", "", "info");
-              }});
+                } else {
+                  // anything else
+                  console.log(err);
+                  setloading(false);
+                  return swal("something went wrong", "", "info");
+                }
+              });
           }
         })
         .catch((err) => {
@@ -160,10 +186,7 @@ function Register() {
                 "something was not right on your end, please try again",
                 "info"
               );
-            else if (
-              err.response.status >= 500 &&
-              err.response.status <= 599
-            )
+            else if (err.response.status >= 500 && err.response.status <= 599)
               return swal(
                 "Uh-oh..Error 500",
                 "Something went wrong at our end. Sorry about that",
@@ -185,7 +208,6 @@ function Register() {
           }
         });
     } else {
-
       const json = JSON.stringify({
         username: username,
         shopname: shopname,
@@ -202,102 +224,107 @@ function Register() {
           "Content-Type": "application/json",
         },
       })
-      .then(async(res) => {
-        if(res.data.status === true){
-          setloading(false)
-          await swal("Successfully registered!","Redirecting to your dashboard...","success")
-          Axios.post(
-            "http://localhost:8080/login",
-            {
-              username: email,
-              password: password,
-              utype: tripType
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
+        .then(async (res) => {
+          if (res.data.status === true) {
+            setloading(false);
+            await swal(
+              "Successfully registered!",
+              "Redirecting to your dashboard...",
+              "success"
+            );
+            Axios.post(
+              "http://localhost:8080/login",
+              {
+                username: email,
+                password: password,
+                utype: tripType,
               },
-            }
-          )
-            .then(async (response) => {
-              if(response.data.status === true){
-                localStorage.setItem("userInfo",JSON.stringify(response.data.data))
-                setloading(false)
-                navigate('/dashboard')
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
               }
-              else{
-                setloading(false)
-                return swal("Incorrect username or password","","info")
-              }
-            })
-            .catch(async (err) => {if (err.response) {
-              // client received an error response (5xx, 4xx)
-              setloading(false);
-              if (err.response.status >= 400 && err.response.status <= 499)
-                return swal(
-                  "Uh-oh.",
-                  "something was not right on your end, please try again",
-                  "info"
-                );
-              else if (
-                err.response.status >= 500 &&
-                err.response.status <= 599
-              )
-                return swal(
-                  "Uh-oh..Error 500",
-                  "Something went wrong at our end. Sorry about that",
-                  "info"
-                );
-            } else if (err.request) {
-              // client never received a response, or request never left
-              setloading(false);
+            )
+              .then(async (response) => {
+                if (response.data.status === true) {
+                  localStorage.setItem(
+                    "userInfo",
+                    JSON.stringify(response.data.data)
+                  );
+                  setloading(false);
+                  navigate("/dashboard");
+                } else {
+                  setloading(false);
+                  return swal("Incorrect username or password", "", "info");
+                }
+              })
+              .catch(async (err) => {
+                if (err.response) {
+                  // client received an error response (5xx, 4xx)
+                  setloading(false);
+                  if (err.response.status >= 400 && err.response.status <= 499)
+                    return swal(
+                      "Uh-oh.",
+                      "something was not right on your end, please try again",
+                      "info"
+                    );
+                  else if (
+                    err.response.status >= 500 &&
+                    err.response.status <= 599
+                  )
+                    return swal(
+                      "Uh-oh..Error 500",
+                      "Something went wrong at our end. Sorry about that",
+                      "info"
+                    );
+                } else if (err.request) {
+                  // client never received a response, or request never left
+                  setloading(false);
+                  return swal(
+                    "Network error",
+                    "The network connection is lost,please try after some time",
+                    "info"
+                  );
+                } else {
+                  // anything else
+                  console.log(err);
+                  setloading(false);
+                  return swal("something went wrong", "", "info");
+                }
+              });
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            // client received an error response (5xx, 4xx)
+            setloading(false);
+            if (err.response.status >= 400 && err.response.status <= 499)
               return swal(
-                "Network error",
-                "The network connection is lost,please try after some time",
+                "Uh-oh.",
+                "something was not right on your end, please try again",
                 "info"
               );
-            } else {
-              // anything else
-              console.log(err);
-              setloading(false);
-              return swal("something went wrong", "", "info");
-            }});
-        }
-      })
-      .catch((err) => {
-        if (err.response) {
-          // client received an error response (5xx, 4xx)
-          setloading(false);
-          if (err.response.status >= 400 && err.response.status <= 499)
+            else if (err.response.status >= 500 && err.response.status <= 599)
+              return swal(
+                "Uh-oh..Error 500",
+                "Something went wrong at our end. Sorry about that",
+                "info"
+              );
+          } else if (err.request) {
+            // client never received a response, or request never left
+            setloading(false);
             return swal(
-              "Uh-oh.",
-              "something was not right on your end, please try again",
+              "Network error",
+              "The network connection is lost,please try after some time",
               "info"
             );
-          else if (
-            err.response.status >= 500 &&
-            err.response.status <= 599
-          )
-            return swal(
-              "Uh-oh..Error 500",
-              "Something went wrong at our end. Sorry about that",
-              "info"
-            );
-        } else if (err.request) {
-          // client never received a response, or request never left
-          setloading(false);
-          return swal(
-            "Network error",
-            "The network connection is lost,please try after some time",
-            "info"
-          );
-        } else {
-          // anything else
-          console.log(err);
-          setloading(false);
-          return swal("something went wrong", "", "info");
-        }
-      });
+          } else {
+            // anything else
+            console.log(err);
+            setloading(false);
+            return swal("something went wrong", "", "info");
+          }
+        });
     }
   };
 
@@ -547,16 +574,20 @@ function Register() {
               )}
             </button>
             <div className="bottom-links">
-            <Link to="/login">
-            Already have an account?{" "}<br/>
-            <span style={{ color: "#73A9DF" }}> Login </span>{" "}
-          </Link>
-          <Link
-            style={{ marginTop: '2rem',display: "inline-block", textDecoration: "none" }}
-            to="/"
-          >
-            Back to home
-          </Link>
+              <Link to="/login">
+                Already have an account? <br />
+                <span style={{ color: "#73A9DF" }}> Login </span>{" "}
+              </Link>
+              <Link
+                style={{
+                  marginTop: "2rem",
+                  display: "inline-block",
+                  textDecoration: "none",
+                }}
+                to="/"
+              >
+                Back to home
+              </Link>
             </div>
           </form>
         </div>

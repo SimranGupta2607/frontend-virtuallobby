@@ -25,9 +25,17 @@ function Home() {
           </button>
         </div>
         <div className="nav-menu-icon">
-          <i style={{cursor:'pointer'}} onClick={() => setdisplay("flex")} className="ri-menu-3-line"></i>
+          <i
+            style={{ cursor: "pointer" }}
+            onClick={() => setdisplay("flex")}
+            className="ri-menu-3-line"
+          ></i>
           <div style={{ display: display }} className="menu-links">
-            <i style={{cursor:'pointer'}} onClick={() => setdisplay("none")} className="ri-close-line"></i>
+            <i
+              style={{ cursor: "pointer" }}
+              onClick={() => setdisplay("none")}
+              className="ri-close-line"
+            ></i>
             <a href="#home">Home</a>
             <a href="#services">Our Services</a>
             <a href="#reviews">Reviews</a>
